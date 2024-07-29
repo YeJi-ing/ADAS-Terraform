@@ -1,0 +1,9 @@
+# Terraform state files
+*.tfstate
+*.tfstate.*
+
+# Terraform lock file
+.terraform.lock.hcl
+
+# .terraform directory contains the terraform binary and other ephemeral files
+.terraform/
