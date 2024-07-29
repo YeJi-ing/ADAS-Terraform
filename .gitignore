@@ -7,3 +7,6 @@
 
 # .terraform directory contains the terraform binary and other ephemeral files
 .terraform/
+
+# Sensitive data
+stg-ehr-eksBastion-keypair
