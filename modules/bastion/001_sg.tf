@@ -1,7 +1,6 @@
 #########################################################################################################
 ## Create Security Group
 #########################################################################################################
-# 모든 TCP 허용
 # SSH 트래픽 허용
 resource "aws_security_group" "allow-ssh-sg" {
   name        = "stg-ehr-sg01-pub01a"
@@ -29,10 +28,10 @@ resource "aws_security_group" "allow-http-sg" {
 
 # 모든 IP에서 HTTP 포트(80)로 들어오는 트래픽 허용
 resource "aws_security_group_rule" "allow-http-ports" {
-  from_port         = 80
+  from_port         = 0
   protocol          = "-1"
   security_group_id = aws_security_group.allow-http-sg.id
-  to_port           = 80
+  to_port           = 0
   type              = "ingress"
   description       = "all ports"
   cidr_blocks       = ["0.0.0.0/0"]
@@ -40,10 +39,10 @@ resource "aws_security_group_rule" "allow-http-ports" {
 
 # HTTP 포트(80)에서 모든 IP로 나가는 트래픽 허용
 resource "aws_security_group_rule" "allow-http-ports-egress" {
-  from_port         = 80
+  from_port         = 0
   protocol          = "-1"
   security_group_id = aws_security_group.allow-http-sg.id
-  to_port           = 80
+  to_port           = 0
   type              = "egress"
   description       = "all ports"
   cidr_blocks       = ["0.0.0.0/0"]

@@ -37,7 +37,7 @@ resource "aws_iam_instance_profile" "bastion_base_profile" {
 
 resource "aws_instance" "bastion" {
   ami           = "ami-02422f4348cf351df"
-  instance_type = "t2.micro"
+  instance_type = "t2.medium"
   subnet_id     = data.aws_subnet.bastion_subnet.id
 
   iam_instance_profile = aws_iam_instance_profile.bastion_base_profile.name

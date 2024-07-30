@@ -10,3 +10,6 @@
 
 # Sensitive data
 stg-ehr-eksBastion-keypair
+
+# temp
+eks/
