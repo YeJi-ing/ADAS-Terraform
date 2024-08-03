@@ -8,7 +8,6 @@ module "eks" {
   cluster_name    = var.cluster-name
   cluster_version = var.cluster-version
  
-  #클러스터 API 서버의 공개 접근을 활성화
   cluster_endpoint_public_access  = true
   cluster_endpoint_private_access = true
 
@@ -33,9 +32,7 @@ module "eks" {
     }
   }
 
-
   vpc_id                   = data.aws_vpc.eks_vpc.id
-  #subnet_ids               = [data.aws_subnets.eks_subnet.ids[0], data.aws_subnets.eks_subnet.ids[1]]
   subnet_ids               = data.aws_subnets.eks_subnet.ids
   
   # EKS Managed Node Group
@@ -46,10 +43,12 @@ module "eks" {
 
   eks_managed_node_groups = {
     backend = {
-      name = "stg-backend-nodegroup"
-      min_size     = 1
-      max_size     = 3
-      desired_size = 2
+      name           = "stg-backend-nodegroup"
+      subnet_ids     = data.aws_subnets.backend_node_subnet.ids
+
+      min_size       = 1
+      max_size       = 3
+      desired_size   = 2
 
       instance_types = ["t2.medium"]
     }
@@ -134,7 +133,6 @@ locals {
 # EKS 클러스터 인증 데이터 소스 추가
 ######################################################################################################################
 
-
 data "aws_eks_cluster_auth" "adas-eks" {
   name = var.cluster-name
 }
@@ -142,7 +140,6 @@ data "aws_eks_cluster_auth" "adas-eks" {
 ######################################################################################################################
 # Load Balancer Controller ROLE 설정
 ######################################################################################################################
-
 
 # load balancer controller에 role을 부여하도록 설정함.
 module "adas_eks_lb_controller_role" {

@@ -27,6 +27,17 @@ data "aws_vpc" "eks_vpc"{
 }
 
 data "aws_subnets" "eks_subnet" { 
+    filter {
+     name = "tag-key"
+     values = ["kubernetes.io/cluster/${var.cluster-name}"]
+   }
+   filter {
+     name = "tag-value"
+     values = ["shared"]
+   }
+}
+
+data "aws_subnets" "backend_node_subnet" { 
   filter {
     name = "tag:Name"
     values = ["stg-ehr-subnet-pri01a", "stg-ehr-subnet-pri01c"]
